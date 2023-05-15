@@ -15,8 +15,8 @@ out = cv2.VideoWriter(video_path_out, cv2.VideoWriter_fourcc(*'MP4V'), int(cap.g
 
 #model_path = os.path.join('.', 'models', 'last.pt')
 model_path = os.path.join('D:', os.sep, 'ai_sweden_2023','details_detection', 'models', 'best.pt')
-# Load a model
-model = YOLO(model_path)  # load a custom model
+
+model = YOLO(model_path)  
 
 threshold = 0.25
 
