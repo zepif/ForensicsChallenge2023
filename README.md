@@ -21,7 +21,7 @@ https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/793d8d04-f
 https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/eb8fa8d6-4231-4811-95f3-72dde50224e1
 
 
-Also, we made a 3d model of object from Vastervik dataset using Meshroom.
+Also, we made a 3d model of object from Västervik dataset using Meshroom.
 
 This model:
 
@@ -36,7 +36,7 @@ https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/8caece61-9
 **Use computer vision to identify relevant objects or patterns in a photo or video for
 criminal investigation.**
 
-For this task we tried to train YOLOv8 model, but due to computer power and AWS SageMaker problems its doesnt show sufficient result. Thus we decided to use pre-trained YOLO model. This model was trained on the same dataset.
+For this task we tried to train YOLOv8 model, but due to computer power and AWS SageMaker problems its doesnt show sufficient result. Thus we decided to use pre-trained YOLO model, which can detect only guns.
 
 Work expample:
 
