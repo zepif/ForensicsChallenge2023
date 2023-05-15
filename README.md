@@ -23,7 +23,13 @@ https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/eb8fa8d6-4
 
 Also, we made a 3d model of object from Vastervik dataset using Meshroom.
 
-This model: ...
+This model:
+
+![model1](https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/5156ecbf-fa70-4d04-a825-5e316eaa9fda)
+
+![model2](https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/807c4545-135d-4714-9bc9-a2af1cce9b68)
+
+![model3](https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/4314a196-cd7b-4021-b01b-1703fbf0f923)
 
 
 # Challenge №2
