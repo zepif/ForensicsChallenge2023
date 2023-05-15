@@ -54,13 +54,14 @@ Work expample: ...(пример работы ChatGPT с промтом); вст�
 
 # Sound analysis
 
-Also, in addition to the main tasks, we decided to make sound analys. We think it might help the police if the crime happened in the dead zone of the camera. Our programm can detect shots and and convert the speech from the video camera into text, which can help in generating a description of the crime and in the course of the crime itself.
+Also, in addition to the main tasks, we decided to make sound analysis. We think it might help the police if the crime happened in the dead zone of the camera. Our programm can detect shots and and convert the speech from the video camera into text, which can help in generating a description of the crime and in the course of the crime itself.
 
 **Example of speech recognition:**
 
 Video:
 
 https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/964c7f0b-741e-4a95-aa2b-d1856ba431f9
+
 (a trimmed version, because github does not allow to download the full version)
 
 Result: transcription.txt
