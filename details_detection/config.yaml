@@ -1,0 +1,7 @@
+path: D:\ai_sweden_2023\details_detection\train_data
+train: train\images
+val: valid\images
+
+nc: 3
+names: ['Handgun', 'Knife', 'Rifle']
+
