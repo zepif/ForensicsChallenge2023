@@ -42,7 +42,7 @@ for public understanding and potential crime-solving.**
 
 For this task we used ChatGPT. We created a special promt, which allows to generate a description of the crime on the prococol.
 
-Work expample and promt can be found here: ...
+Work expample and promt can be found here: chat.html
 
 # Challenge №4
 **Use large language models to generate visualizations or text descriptions of a crime
