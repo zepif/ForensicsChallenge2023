@@ -4,7 +4,7 @@ from dataset import SyntheticDataset
 from model import NeRF
 
 if __name__ == "__main__":
-    model_checkpoint_path = "path_to_your_model_checkpoint.pth"
+    model_checkpoint_path = "model.pth"
 
     model = NeRF()
     model.load_state_dict(torch.load(model_checkpoint_path))
