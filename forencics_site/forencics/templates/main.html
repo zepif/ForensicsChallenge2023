@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='layout.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='lupa.svg') }}">
+</head>
+<html>
+
+<head>
+  <title>Main</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="Top">
+      <div class="Team">
+        <div class="Smiley" id="parent">
+          <h1 id="child_middle" style="color: #ffffff;">🤔</h1>
+        </div>
+      </div>
+      <div class="Title" id="parent">
+        <h1 id="child_left" style="color: #ffffff;">Forencics Challenge 2023</h1>
+      </div>
+      <div class="Divs"">
+        <div class=" DMain" style="background-color: var(--secondary);">
+        <a href="{{ url_for('main_page') }}">Main</a>
+      </div>
+      <div class="DModel">
+        <a href="{{ url_for('model_page') }}">Model</a>
+      </div>
+      <div class="DPres">
+        <a href="{{ url_for('pres_page') }}">Pres</a>
+      </div>
+      <div class="DInfo">
+        <a href="{{ url_for('info_page') }}">Info</a>
+      </div>
+      <div class="div5"> </div>
+    </div>
+  </div>
+  <div class="Gap"></div>
+  <div style="padding:10px">
+    <div class="Bottom">
+      <div style="padding-left: 5%; padding-right: 5%; font-size: 18px;">
+        <h1>Вітаємо у Квесті!</h1>
+        <form method="POST">
+          <br>
+          <label for="team_id">Логін команди:</label>
+          <input type="text" name="team_id" style="font-size: 20px">
+          <br>
+          <br>
+          <label for="password">Пароль команди:</label>
+          <input type="password" name="password" style="font-size: 20px">
+          <br>
+          <br>
+          <input type="submit" value="Войти">
+          <br>
+        </form>
+      </div>
+      <div style="padding:10px;"></div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
