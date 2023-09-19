@@ -24,22 +24,29 @@ def get_metadata():
     print("got metadata", len(ret))
     return ret
 
+def load_example(x):
+    waveform, sample_rate = torchaudio.load(x, normalize=True)
+    assert(sample_rate == self.sample_rate)
+    mel_specgram = self.transform(waveform)
+    return mel_specgram[0].T
+
+cache = {}
 class LJSpeech(Dataset):
     def __init__(self):
         self.meta = get_metadata()
         self.sample_rate = 22050
-        self.transform = torchaudio.transforms.MelSpectrogram(self.sample_rate, n_fft=1024, win_length=1024)
+        self.transform = torchaudio.transforms.MelSpectrogram(self.sample_rate, n_fft=1024, win_length=1024,
+                                                              hop_length=1024, n_mels=80)
 
     def __len__(self):
         return len(self.meta)
     
     def __getitem__(self, idx):
-        x, y = self.meta[idx]
-        waveform, sample_rate = torchaudio.load(x, normalize=True)
-        assert(sample_rate == self.sample_rate)
-        mel_specgram = self.transform(waveform)
-        #return 10+torch.log10(mel_specgram[0]).T, y
-        return mel_specgram[0], y
+        if idx not in cache:
+            x, y = self.meta[idx]
+            #return 10+torch.log10(mel_specgram[0]).T, y
+            cache[idx] = x, y
+        return cache[idx]
     
 class Rec(nn.Module):
     def __init__(self):
@@ -72,7 +79,7 @@ def pad_sequence(batch):
 def get_dataloader(batch_size):
     dset = LJSpeech()
     trainloader = torch.utils.data.DataLoader(dset, batch_size=batch_size, shuffle=True, num_workers=8, 
-                                                collate_fn=None)
+                                                collate_fn=None) #
     return dset, trainloader
 
 def train(): 
