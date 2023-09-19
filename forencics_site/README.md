@@ -4,37 +4,25 @@ Website for presentation.
 
 ## Run
 
-### Шаг 1. Установить [Hatch](https://hatch.pypa.io)
-`Hatch` - современный менеджер проектов для Python со встроенной билд-системой и менеджером окружений.
+### Step 1. Install Hatch](https://hatch.pypa.io)
 
 ```bash
 # preferred
 pipx install hatch
-# or (macOS)
-brew install hatch
-# or (not recommended)
-pip install hatch
+
 ```
 
-### Шаг 2. Поменять `flask_secret_key` в файле `config.yaml`
+### Step 2.  `flask_secret_key` in file `config.yaml`
 
-Вдруг среди детей найдутся эксперты по кибербезопасности.
-
-### Шаг 3. Запустить сервер:
+### Step 3. Run server:
 
 ```bash
 hatch run server -c config.yaml
 ```
 
-## Разработка
+## Development
 
-### Установить [pipx](https://pypa.github.io/pipx)
-
-MacOS:
-```bash
-brew install pipx
-pipx ensurepath
-```
+### Install [pipx](https://pypa.github.io/pipx)
 
 Linux:
 ```bash
@@ -42,15 +30,8 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 ```
 
-### Установить [Hatch](https://hatch.pypa.io)
+### Install [Hatch](https://hatch.pypa.io)
 
 ```bash
 pipx install hatch
-```
-
-### Pre-commit hooks
-
-```bash
-pipx install pre-commit
-pre-commit install
 ```

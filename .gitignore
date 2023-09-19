@@ -3,6 +3,8 @@
 
 *.zip
 
+*.mp4
+
 *.JPG
 
 __pycache__

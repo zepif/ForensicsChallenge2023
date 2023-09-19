@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from threading import RLock
 
-
 @dataclass
 class State:
     placeholder: int
@@ -16,6 +15,17 @@ class Controller:
     def load(self):
         """Loads the config"""
 
+    def user_uploaded_file(self, filename: str):
+        """User uploads file"""
+        # TODO
+    
+    def user_file_flash(self):
+        """User wants to remove last file"""
+        print("pepka")
+        # TODO
+
+    
+    
     # def team_enter_code(self, team_id: str, code: str):
     #     """
     #     Team enters code

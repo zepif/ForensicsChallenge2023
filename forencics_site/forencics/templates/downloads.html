@@ -40,32 +40,18 @@
     <div style="padding:10px">
       <div class="Bottom">
         <div style="padding-left: 5%; padding-right: 5%; font-size: 18px;">
-          <h1>Load your video there!</h1>
-          <form method=post enctype=multipart/form-data>
-            <input type=file name=file>
-            <input type=submit value=Upload>
-          </form>
-          {% if file_uploaded %}
-          <h2>You've uploaded: {{file_uploaded}}</h2>
-          <h3>Want to remove file?</h3>
-          <form>
-            <button type="button" onclick="remove_file()">Remove file</button>
-          </form>
-          {% endif %}
+          <h1>Our file downloads should be here!</h1>
+          <ul>
+            {% for file in files %}
+            <li> <a href="{{ url_for('download_file', filename=file) }}">{{ file }}</a></li>
+            {% endfor %}
+          </ul>
         </div>
         <div style="padding:10px;"></div>
       </div>
     </div>
 
   </div>
-  <script>
-    function remove_file() {
-      fetch('/remove_file')
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
-    } 
-  </script>
 </body>
 
 </html>
