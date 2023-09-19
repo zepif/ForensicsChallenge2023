@@ -1,2 +1,4 @@
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 Texture2.0/texturedMesh.obj filter=lfs diff=lfs merge=lfs -text
+
+*.gitkeep !eol
