@@ -41,11 +41,9 @@
     <div style="padding:10px">
       <div class="Bottom">
         <div style="padding-left: 5%; padding-right: 5%; font-size: 18px;">
-          <h1>Here you should see a 3d model!</h1>
-          <model-viewer
-            alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
-            src="{{ url_for('static', filename='model.glb') }}" shadow-intensity="1" camera-controls
-            touch-action="pan-y"></model-viewer>
+          <h1>Here you see our 3d model!</h1>
+          <model-viewer alt="Our 3d model generated from pictures" src="{{ url_for('static', filename='model.glb') }}"
+            shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
         </div>
         <div style="padding:10px;"></div>
       </div>

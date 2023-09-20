@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='layout.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='layout_info.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='lupa.svg') }}">
 </head>
@@ -21,16 +21,16 @@
       </div>
       <div class="Divs">
         <div class="DMain">
-          <a href="{{ url_for('main_page') }}">Main</a>
+          <a class="transitions" href="{{ url_for('main_page') }}">Main</a>
         </div>
         <div class="DModel">
-          <a href="{{ url_for('model_page') }}">Model</a>
+          <a class="transitions" href="{{ url_for('model_page') }}">Model</a>
         </div>
         <div class="DPres">
-          <a href="{{ url_for('pres_page') }}">Pres</a>
+          <a class="transitions" href="{{ url_for('pres_page') }}">Pres</a>
         </div>
         <div class="DInfo nowat">
-          <a href="{{ url_for('info_page') }}">Info</a>
+          <a class="transitions" href="{{ url_for('info_page') }}">Info</a>
         </div>
       </div>
     </div>
@@ -39,14 +39,163 @@
 
     <div style="padding:10px">
       <div class="Bottom">
-        <div style="padding-left: 5%; padding-right: 5%; font-size: 18px;">
-          <h1>There should be our infos!</h1>
-        </div>
-        <div style="padding:10px;"></div>
-      </div>
-    </div>
+        <div class="BottomInner">
+          <div class="Topp">
+            <h1>Challenge info:</h1>
+            <p>
+              This project has been completed as part of
+              <a class="usuala" href="https://www.ai.se/en/events/forensics-challenge-ai-powered-investigations">
+                Forensics Challenge</a>
+              powered by <a class="usuala" href="https://www.ai.se/en">AI Sweden</a> and partners.
+            </p>
+            <h1>About us:</h1>
+          </div>
+          <div class="Left" style="padding: 10px;">
+            <h2>Dmytro Koziuk</h2>
+            <p style="float: left;"><img src="{{ url_for('static', filename='dmytro_koziuk.png') }}" alt="Dmytro Koziuk"
+                style="height:500px; padding-right:10px;"></p>
+            <p>Dmytro Koziuk (he/him) was born in 2006 in Kharkiv. In 2023, he graduated from the <a class="usuala"
+                href="http://gymnasium45.edu.kh.ua">
+                Kharkiv Academic Lyceum #45</a> with advanced study of technical subjects. In the same year, he entered
+              the National Technical University <a class="usuala" href="https://www.kpi.kharkov.ua/eng/">Kharkiv
+                Polytechnic Institute</a>.</p>
 
-  </div>
+            <p>Dmytro has won many prizes in Kharkiv
+              regional olympiads in mathematics and informatics, among them the first prize in informatics in 2022. In
+              2021, Dmytro won the <a class="usuala" href="https://data.oi.in.ua/people/419425">third prize</a> in the
+              All-Ukrainian Olympiad in
+              Informatics.
+              In 2022, he won the third
+              prize in the All-Ukrainian competition in Informatics and the second prize in <a class="usuala"
+                href="https://oi.in.ua/vkoi-2021/">All-Ukrainian team Olympiad
+                in Informatics</a>, and participated in the All-Ukrainian part of the <a class="usuala"
+                href="https://icpc.global">ICPC</a>
+              school stage.</p>
+
+            <p>In the ninth and
+              tenth grade for the contest of the <a class="usuala" href="https://man.gov.ua/en">Junior Academy of
+                Sciences</a> Dmytro wrote
+              research works on the topics
+              Neural networks in the field of advertising and Development of an online mentoring system of research and
+              development work under the guidance of his supervisor Prof. <a class="usuala"
+                href="https://scholar.google.com.ua/citations?user=agHztJQAAAAJ&hl=ru">Kirill Rukkas</a>
+              from
+              <a class="usuala" href="https://karazin.ua/en/">Kharkiv National
+                University</a>. For these works, he won third prizes on the regional level.
+            </p>
+
+            <p>Even in his school years
+              Dmytro
+              was fond of machine learning, so he took part in the courses from <a class="usuala"
+                href="https://www.ai.se/en">AI Sweden</a>:
+              <a class="usuala" href="https://www.ai.se/en/www.ai.se/en/partner-offering/talent-programs/Hi-AI">Hi
+                AI!</a> and Ukrainian Talents.
+              He also participated in <a class="usuala"
+                href="https://www.ai.se/en/events/forensics-challenge-ai-powered-investigations">Forensics Challenge
+                2023</a>, where he and his team had
+              to
+              develop a system that could
+              help the police with video camera crimes. The project was fully realised and was able to recognise people,
+              faces, weapons, shooting sounds and make a 3d model of the crime scene using data from cameras.
+            </p>
+
+            <p>In 2023,
+              Dmytro helped with the organisation of the summer school in mathematics and computer science <a
+                class="usuala" href="https://summerschool.lol">LOL-2023</a>. He
+              helped with teaching, organising teaching materials and computer science tasks for students of grades
+              7-11.</p>
+
+            <p>After Russia's full-scale invasion in Ukraine, Dmytro remained in Kharkiv and was engaged in
+              volunteer activities.</p>
+
+            <p> After graduating from lyceum Dmytro continues his education in one of the
+              prestigious universities in Kharkiv, where he is studying mathematics and programming. Now as a student,
+              the he participates in programming contests such as <a class="usuala" href="https://ugp.in.ua">Grand Prix
+                of Ukraine</a>
+              and ACM ICPC. </p>
+          </div>
+          <div class="Right" style="padding:10px;">
+            <h2>Oleksii Gamov</h2>
+            <p style="float: left;"><img src="{{ url_for('static', filename='oleksii_gamov.png') }}" alt="Oleksii Gamov"
+                style="height:500px; padding-right:10px;"></p>
+            <p>Oleksii Gamov was born in Kharkiv in 2005. In 2023, he graduated from the
+              <a class="usuala" href="http://gymnasium45.edu.kh.ua">
+                Kharkiv Academic Lyceum №45</a>
+              with
+              honors.
+            </p>
+
+            <p>Oleksii won a number of prizes in Kharkiv regional olympiads in mathematics, physics, and informatics,
+              including the first prize in physics in 2019, 2020, 2021, and 2022. In 2022 and 2021, Oleksii
+              participated
+              in the All-Ukrainian Internet Olympiad in Physics, winning a third and a second prize. In 2019, Oleksii
+              won
+              the <b>third prize</b> in the All-Ukrainian Physics Olympiad, competing against eighth-graders while in
+              seventh
+              grade.</p>
+
+            <p>Oleksii also participated in the All-Ukrainian team competition <b>Tournament of Young Physicists</b>
+              where his
+              team won the third prize. They had to research a range of physical phenomena, explain them, and then
+              present mathematical models that predict their behavior.</p>
+
+            <p> In grades 8-10, Oleksii participated in the contest of the <a class="usuala"
+                href="https://man.gov.ua/en">Junior Academy of Sciences</a>, where he wrote
+              three research papers in theoretical physics under the guidance of PhD student<a class="usuala"
+                src="https://physics.itmo.ru/ru/personality/maksim_mazanov?overridden_route_name=entity.personality.canonical&base_route_name=entity.personality.canonical&page_manager_page=personality_page&page_manager_page_variant=personality_page-panels_variant-0&page_manager_page_variant_weight=0">
+                Maksym Maxanov</a> from ITMO University.</p>
+
+            <p>1. Research and optimization of parameters of rubber-powered boats</p>
+
+            <p>2. Study of the granular environment properties depending on their parameters and the behavior of
+              individual
+              objects in them</p>
+
+            <p>3. Investigation of closed dynamic systems based on the Kapitsa phenomenon</p>
+
+            <p>For these works, he won first and second prizes at the regional level and a <b>third prize</b> at the
+              All-Ukrainian
+              level.</p>
+
+            <p>Oleksii is interested in machine learning. He participated in the courses from <a class="usuala"
+                href="https://www.ai.se/en">AI Sweden</a>: <a class="usuala"
+                href="https://www.ai.se/en/www.ai.se/en/partner-offering/talent-programs/Hi-AI">Hi
+                AI!</a> and
+              Ukrainian Talents. He also took part in <a class="usuala"
+                href="https://www.ai.se/en/events/ai-space-challenge-social-good">AI Space Challenge for Social Good</a>
+              and <a class="usuala" href="https://www.ai.se/en/events/forensics-challenge-ai-powered-investigations">
+                Forensics Challenge</a>
+              2023, where he and his team have developed systems to determine poverty level from satellite images and
+              to
+              help the police detect and investigate crimes. Both projects were finished and were able to identify the
+              most problematic areas and to recognise people, faces, weapons, shooting sounds and make a 3d model of
+              the
+              crime scene using data from cameras.</p>
+
+            <p>In 2023, Oleksii as a volunteer helped with the organisation of the summer school in mathematics and
+              computer science <a class="usuala" href="https://summerschool.lol">LOL-2023</a>. He helped with the
+              organisation of the Quest - an entertaining event of the
+              summer school and IT infrastructure accompanying it.</p>
+
+            <p>After the Russia's full-scale invasion in Ukraine, Oleksii moved to Germany and continued his education
+              there.</p>
+
+            <p> Oleksii is interested in esoteric and nowdays esoteric programming languages like Piet or LISP, history
+              of programming and
+              computers and the programming language Rust. Among his hobbies are windsurfing, hiking and kayaking.</p>
+          </div>
+          <div class="Separator" style="border-left: 6px solid #383838; height: 98%;"></div>
+          <div class="Cntc">
+            <div class="LeftCV" style="padding:10px;"> DimaCV
+            </div>
+            <div class="RightCV" style="padding:10px;">OleksiiCV
+            </div>
+            <div class="SepCV" style="border-left: 6px solid #383838; height: 98%;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 </body>
 
 </html>

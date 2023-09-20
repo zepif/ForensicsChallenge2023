@@ -140,6 +140,11 @@ option {
   padding: 10px;
 }
 
+model-viewer {
+  width: 70vw;
+  height: 70vh;
+}
+
 /*.container * {
   border: 1px solid red;
   position: relative;
