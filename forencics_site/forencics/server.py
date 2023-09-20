@@ -15,9 +15,9 @@ import yaml
 
 
 # TODO add proper uploads folser if needed 
-UPLOAD_FOLDER = './uploads' 
+UPLOAD_FOLDER = 'uploads' 
 # TODO add proper downloads folser if needed 
-DOWNLOAD_FOLDER = './uploads'
+DOWNLOAD_FOLDER = 'uploads'
 # TODO add all appripriate file formats
 ALLOWED_EXTENSIONS = {'mp4'}
 
@@ -61,7 +61,6 @@ def main_page():
     
     return render_template(
         "main.html",
-        is_file_uploaded=session["is_file_uploaded"],
     )
 
 
