@@ -41,6 +41,95 @@
       <div class="Bottom">
         <div style="padding-left: 5%; padding-right: 5%; font-size: 18px;">
           <h1>Our presentation should be here!</h1>
+          <h1 id="challenge-1">Challenge №1</h1>
+          <p><strong>Use computer vision to isolate each person in a video for 3D recreation or identifying
+              suspects in crime scenes.</strong></p>
+          <p>To solve this task we used several models such as: YOLOv8, Amazon Rekognition, Open-CV. As a result, we saw
+            that the YOLOv8 model is best suited for this task, since it shows the most accurate results and is the
+            fastest at the same time.</p>
+          <p>Work expample:</p>
+          <p><strong>YOLOv8</strong></p>
+          <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/OmSCg63eKfs?si=IpK1WFgOCHuhU8G5"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </p>
+          <p><strong>Amazon Rekognition</strong></p>
+          <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/YkRjtQa5QFA?si=8D7zJbEG82DgnpW1"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </p>
+          <p><strong>Open-CV</strong></p>
+          <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/lZrzRcWs1O4?si=wrFJw6THwB55u5ww"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </p>
+          <p>Also, we made a 3d model of object from Västervik dataset using Meshroom. <a class="usuala"
+              href="{{ url_for('model_page') }}">Model</a></p>
+          <h1 id="challenge-2">Challenge №2</h1>
+          <p><strong>Use computer vision to identify relevant objects or patterns in a photo or video for
+              criminal investigation.</strong></p>
+          <p>For this task we tried to train YOLOv8 model, but due to computer power and AWS SageMaker problems its
+            doesnt show sufficient result. Thus we decided to use pre-trained YOLO model, which can detect only guns.
+          </p>
+          <p>Work expample:</p>
+          <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/0FsFL7V2sPU?si=tTV7h8U0VkJHbUEE"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </p>
+          <h1 id="challenge-3">Challenge №3</h1>
+          <p><strong>Use natural language processing to generate a detailed description of a crime scene
+              for public understanding and potential crime-solving.</strong></p>
+          <p>For this task we used ChatGPT. We created a special promt, which allows to generate a description of the
+            crime on the prococol.</p>
+          <p>Work expample and promt can be found here: chat.html</p>
+          <h1 id="challenge-4">Challenge №4</h1>
+          <p><strong>Use large language models to generate visualizations or text descriptions of a crime
+              scene or investigation.</strong></p>
+          <p>For this task we used ChatGPT and DeepAI. We used ChatGPT to find the most important things in prococol.
+            After, we generate images using DeepAI.</p>
+          <p>Work expample: </p>
+          <p><img src="{{ url_for('static', filename='gen1.jpg') }}" alt="generated1"></p>
+          <p><img src="{{ url_for('static', filename='gen2.jpg') }}" alt="generated2"></p>
+          <p><img src="{{ url_for('static', filename='gen3.jpg') }}" alt="generated3"></p>
+          <p><img src="{{ url_for('static', filename='gen4.jpg') }}" alt="generated4"></p>
+          <h1 id="sound-analysis">Sound analysis</h1>
+          <p>Also, in addition to the main tasks, we decided to make sound analysis. We think it might help the police
+            if the crime happened in the dead zone of the camera. Our programm can detect shots and and convert the
+            speech from the video camera into text, which can help in generating a description of the crime and in the
+            course of the crime itself.</p>
+          <p><strong>Example of speech recognition:</strong></p>
+          <p>Video:</p>
+          <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/59IceUTEGGg?si=wgpFTNldM64Qjbei"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </p>
+          <p>(a trimmed version, because github does not allow to download the full version)</p>
+          <p>Result: transcription.txt</p>
+          <p><strong>Example of shots recognition:</strong></p>
+          <p>Video:</p>
+          <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/r5gkuvquFIQ?si=xoZPbcGrls8CZNwr"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </p>
+          <p>Result:</p>
+          <p><img src="{{ url_for('static', filename='sound_analysis.jpg') }}"
+              alt="image of shots recognition and markers">
+          </p>
+          <p>also program shows shots time in console
+          </p>
+
         </div>
         <div style="padding:10px;"></div>
       </div>

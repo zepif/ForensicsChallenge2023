@@ -145,6 +145,39 @@ model-viewer {
   height: 70vh;
 }
 
+.transitions {}
+
+a.transitions {
+  display: block;
+  font-family: Arial;
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+a.transitions:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.nowat a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.usuala {}
+
+a.usuala {
+  font-weight: bold;
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+a.usuala:hover {
+  text-decoration: underline;
+}
+
 /*.container * {
   border: 1px solid red;
   position: relative;
