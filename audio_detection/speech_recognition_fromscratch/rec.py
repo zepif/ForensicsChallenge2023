@@ -14,6 +14,8 @@ XMAX = 810
 YMAX = 150
 SAMPLE_RATE = 22050
 
+import functools
+@functools.lru_cache(None)
 def get_metadata():
     ret = []
     with open(os.path.join(DATASET, 'metadata.csv'), newline = '') as csvfile:
@@ -35,10 +37,17 @@ def load_example(x):
     mel_specgram = mel_transform(waveform)
     return mel_specgram[0].T
 
+import hashlib
 cache = {}
 class LJSpeech(Dataset):
-    def __init__(self):
+    def __init__(self, val=False):
         self.meta = get_metadata()
+        if val:
+            cmp = lambda x: hashlib.sha1(x[0].encode('utf-8')).hexdigest()[0] == '0'
+        else:
+            cmp = lambda x: hashlib.sha1(x[0].encode('utf-8')).hexdigest()[0] != '0'
+        self.meta = [x for x in self.meta if cmp(x)]
+        print(f"set has {len(self.meta)}")
         #self.sample_rate = 22050
 
     def __len__(self):
@@ -76,7 +85,7 @@ class Rec(nn.Module):
             GoodBatchNorm(H),
             nn.ReLU()
         )
-        self.encoder = nn.GRU(H, H, batch_first=False)
+        self.encoder = nn.GRU(H, H, batch_first=False, dropout=0.1)
         self.decode = nn.Sequential(
             nn.Linear(H, H//2),
             GoodBatchNorm(H//2),
@@ -104,8 +113,8 @@ def pad_sequence(batch):
     labels = torch.tensor(labels, dtype=torch.int32)
     return sequences_padded, labels, input_lengths, target_lengths
 
-def get_dataloader(batch_size):
-    dset = LJSpeech()
+def get_dataloader(batch_size, val):
+    dset = LJSpeech(val)
     trainloader = torch.utils.data.DataLoader(dset, batch_size=batch_size, shuffle=True, 
                                                 collate_fn=pad_sequence, drop_last=True) #
     return dset, trainloader
@@ -123,11 +132,13 @@ def train():
         "epochs": 100,
         "batch_size": batch_size,
     }
-    dset, trainloader = get_dataloader(batch_size)
+    dset, trainloader = get_dataloader(batch_size, False)
+    valdset, valloader = get_dataloader(batch_size, True)
     #ctc_loss = nn.CTCLoss(reduction='mean', zero_infinity='True').cuda()
     #model = Rec().cuda()
     ctc_loss = nn.CTCLoss(reduction='mean', zero_infinity='True')
     model = Rec()
+    #model.load_state_dict(torch.load('model/...'))
     #optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     val = torch.tensor(load_example('data/wavs/LJ037-0171.wav'))
@@ -139,8 +150,19 @@ def train():
         print('Validation: ',  pp)
         torch.save(model.state_dict(), f'./models/speech_{epoch}.pt')
 
+        losses = []
+        t = tqdm(valloader, total=len(valdset)//batch_size)
+        for data in t:
+            input, target, input_length, target_length = data
+            guess = model(input)
+            loss = ctc_loss(guess, target, input_length, target_length)
+            losses.append(loss)
+        val_loss =  torch.mean(torch.tensor(losses)).item()
+        print(val_loss)
+        if WAN:
+            wandb.log({"val_loss": val_loss})
+
         t = tqdm(trainloader, total=len(dset)//batch_size)
-        ind = 0
         for data in t:
             input, target, input_length, target_length = data
             input_length = torch.as_tensor(input_length)
@@ -159,7 +181,7 @@ def train():
             #print(input_length.type())
             #print(f'guess : {guess} ; target : {target} ; input size {input_length} ; target size : {target_length}')
             loss = ctc_loss(guess, target, input_length, target_length)
-            ind = ind + 1
+            
             loss.backward()
             optimizer.step()
             t.set_description("loss: %.2f" % loss.item())
