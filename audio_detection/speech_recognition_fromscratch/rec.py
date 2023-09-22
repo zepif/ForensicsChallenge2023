@@ -37,8 +37,14 @@ def load_example(x):
     mel_specgram = mel_transform(waveform)
     return mel_specgram[0].T
 
-import hashlib
 cache = {}
+def init_data():
+    meta = get_metadata()
+    for x, y in tqdm(meta):
+        cache[x] = load_example(x), y
+init_data()
+
+import hashlib
 class LJSpeech(Dataset):
     def __init__(self, val=False):
         self.meta = get_metadata()
@@ -54,8 +60,9 @@ class LJSpeech(Dataset):
         return len(self.meta)
     
     def __getitem__(self, idx):
-        if idx not in cache:
-            x, y = self.meta[idx]
+        x, y = self.meta[idx]
+        if x not in cache:
+            print("never should happen")
             cache[idx] = load_example(x), y
         return cache[idx]
     
@@ -117,7 +124,7 @@ def pad_sequence(batch):
 def get_dataloader(batch_size, val):
     dset = LJSpeech(val)
     trainloader = torch.utils.data.DataLoader(dset, batch_size=batch_size, shuffle=True, 
-                                                collate_fn=pad_sequence, pin_memory=True) #
+                                                collate_fn=pad_sequence, pin_memory=True)
     return dset, trainloader
 
 import wandb
