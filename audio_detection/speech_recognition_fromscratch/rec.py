@@ -85,7 +85,8 @@ class Rec(nn.Module):
             GoodBatchNorm(H),
             nn.ReLU()
         )
-        self.encoder = nn.GRU(H, H, batch_first=False, dropout=0.1)
+        #self.encoder = nn.GRU(H, H, batch_first=False, dropout=0.1)
+        self.encoder = nn.GRU(H, H, batch_first=False)
         self.decode = nn.Sequential(
             nn.Linear(H, H//2),
             GoodBatchNorm(H//2),
@@ -104,7 +105,7 @@ def pad_sequence(batch):
     input_lengths = [x[0].shape[0] for x in sorted_batch]
     target_lengths = [len(x[1]) for x in sorted_batch]
     sequences = [x[0] for x in sorted_batch]
-    sequences_padded = torch.nn.utils.rnn.pad_sequence(sequences, batch_first=True)
+    sequences_padded = torch.nn.utils.rnn.pad_sequence(sequences, batch_first=False)
     # YMAX = max(input_length)
     #labels = [x[1] + [0]*(YMAX - len(x[1])) for x in sorted_batch]
     #labels = torch.LongTensor(labels)   
@@ -116,7 +117,7 @@ def pad_sequence(batch):
 def get_dataloader(batch_size, val):
     dset = LJSpeech(val)
     trainloader = torch.utils.data.DataLoader(dset, batch_size=batch_size, shuffle=True, 
-                                                collate_fn=pad_sequence, drop_last=True) #
+                                                collate_fn=pad_sequence, pin_memory=True) #
     return dset, trainloader
 
 import wandb
@@ -124,31 +125,37 @@ import wandb
 WAN = False
 
 def train():
+    epochs = 300
     batch_size = 64
+    learning_rate = 3e-4
     if WAN:
         wandb.init(project="speech", entity="zellti152") 
     config={
-        "learning_rate": 0.001,
-        "epochs": 100,
+        "learning_rate": learning_rate,
+        "epochs": epochs,
         "batch_size": batch_size,
     }
     dset, trainloader = get_dataloader(batch_size, False)
     valdset, valloader = get_dataloader(batch_size, True)
     #ctc_loss = nn.CTCLoss(reduction='mean', zero_infinity='True').cuda()
     #model = Rec().cuda()
-    ctc_loss = nn.CTCLoss(reduction='mean', zero_infinity='True')
+    ctc_loss = nn.CTCLoss()
     model = Rec()
     #model.load_state_dict(torch.load('model/...'))
     #optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    #import apex
+    #optimizer = apex.optimizers.FusedAdam(model.parameters(), lr=learning_rate)
     val = torch.tensor(load_example('data/wavs/LJ037-0171.wav'))
-    for epoch in range(100):
+    for epoch in range(epochs):
         if WAN:
             wandb.watch(model)
-        mguess = model(val[:, None])
-        pp = ''.join([CHARSET[c-1] for c in mguess[:, 0, :].argmax(dim=1) if c != 0])
-        print('Validation: ',  pp)
-        torch.save(model.state_dict(), f'./models/speech_{epoch}.pt')
+        
+        if epoch % 2 == 0:
+            mguess = model(val[:, None])
+            pp = ''.join([CHARSET[c-1] for c in mguess[:, 0, :].argmax(dim=1) if c != 0])
+            print('Validation: ',  pp)
+            torch.save(model.state_dict(), f'./models/speech_{epoch}.pt')
 
         losses = []
         t = tqdm(valloader, total=len(valdset)//batch_size)
@@ -158,10 +165,10 @@ def train():
             loss = ctc_loss(guess, target, input_length, target_length)
             losses.append(loss)
         val_loss =  torch.mean(torch.tensor(losses)).item()
-        print(val_loss)
+        print(f"val_loss: {val_loss:.2f}")
         if WAN:
             wandb.log({"val_loss": val_loss})
-
+ 
         t = tqdm(trainloader, total=len(dset)//batch_size)
         for data in t:
             input, target, input_length, target_length = data
@@ -174,10 +181,11 @@ def train():
             #target = target.to('cuda:0', non_blocking=True)
             optimizer.zero_grad()
             guess = model(input)
-
+            '''
             pp = ''.join([CHARSET[c-1] for c in guess[:, 0, :].argmax(dim=1) if c != 0])
             if len(pp) > 0:
                 print(pp)
+            '''
             #print(input_length.type())
             #print(f'guess : {guess} ; target : {target} ; input size {input_length} ; target size : {target_length}')
             loss = ctc_loss(guess, target, input_length, target_length)
