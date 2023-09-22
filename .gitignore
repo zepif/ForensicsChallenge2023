@@ -173,3 +173,8 @@ cython_debug/
 #remove events.yaml
 events.yaml
 
+LJSpeech-1.1/metadata.csv
+audio_detection/speech_recognition_fromscratch/data/metadata.csv
+*.pt
+
+wandb
