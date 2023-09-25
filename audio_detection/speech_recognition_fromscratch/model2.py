@@ -3,10 +3,12 @@ import csv
 import torch
 from tqdm import tqdm
 from torch import nn
+from torch import log_softmax, nn
 import torch.optim as optim
 import torchaudio
 import numpy as np
 from torch.utils.data import Dataset
+from preprocces import load_example, to_text, CHARSET
 
 DATASET = "C:\\fun\ForensicsChallenge2023_team6\\audio_detection\speech_recognition_fromscratch\data"
 CHARSET = " abcdefghijklmnopqrstuvwxyz,."
@@ -64,7 +66,7 @@ class LJSpeech(Dataset):
         if x not in cache:
             print("never should happen")
             cache[idx] = load_example(x), y
-        return cache[idx]
+        return cache[x]
     
 class GoodBatchNorm(nn.Module):
     def __init__(self, channels):
@@ -173,14 +175,22 @@ def train():
             losses.append(loss)
         val_loss =  torch.mean(torch.tensor(losses)).item()
         print(f"val_loss: {val_loss:.2f}")
+
         if WAN:
-            wandb.log({"val_loss": val_loss})
+            wandb.log({"val_loss": val_loss, "lr" : scheluder.get_last_lr(){0}})
  
-        t = tqdm(trainloader, total=len(dset)//batch_size)
-        for data in t:
-            input, target, input_length, target_length = data
-            input_length = torch.as_tensor(input_length)
-            target_length = torch.as_tensor(target_length)
+        #t = tqdm(trainloader, total=len(dset)//batch_size)
+
+        random.shuffle(trains)
+        model.train()
+        batches = np.array(trains)[:len(data)//batch_size * batch_size].reshape(-1, batch_size)
+        j = 0
+        for samples in (t:=tqdm(batches)):
+            input, target, input_length, target_length = get_sample(samples)
+            
+            input = train_audio_transform(input.permute(1, 2, 0)).permute(2, 0 1)
+            #target = torch.rensor(target, dtype=torch.int32, device="cuda:0")
+            target = torch.rensor(target, dtype=torch.int32)
 
             #input = input.cuda()
             #input = input.to('cuda:0', non_blocking=True)
@@ -199,9 +209,12 @@ def train():
             
             loss.backward()
             optimizer.step()
-            t.set_description("loss: %.2f" % loss.item())
-            if WAN:
+            scheduler.step()
+
+            t.set_description(f"epoch {epoch}  loss: %.2f" % loss.item())
+            if WAN and j%10==0:
                 wandb.log({"loss": loss})
+            j += 1
 
 if __name__ == '__main__':
     train()
