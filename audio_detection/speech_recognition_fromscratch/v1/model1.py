@@ -3,12 +3,10 @@ import csv
 import torch
 from tqdm import tqdm
 from torch import nn
-from torch import log_softmax, nn
 import torch.optim as optim
 import torchaudio
 import numpy as np
 from torch.utils.data import Dataset
-from preprocces import load_example, to_text, CHARSET
 
 DATASET = "C:\\fun\ForensicsChallenge2023_team6\\audio_detection\speech_recognition_fromscratch\data"
 CHARSET = " abcdefghijklmnopqrstuvwxyz,."
@@ -136,7 +134,7 @@ WAN = False
 def train():
     epochs = 300
     batch_size = 64
-    learning_rate = 3e-4
+    learning_rate = 0.001
     if WAN:
         wandb.init(project="speech", entity="zellti152") 
     config={
@@ -146,16 +144,18 @@ def train():
     }
     dset, trainloader = get_dataloader(batch_size, False)
     valdset, valloader = get_dataloader(batch_size, True)
-    #ctc_loss = nn.CTCLoss(reduction='mean', zero_infinity='True').cuda()
+    #ctc_loss = nn.CTCLoss(reduction='mean', zero_infinity=True).cuda()
     #model = Rec().cuda()
-    ctc_loss = nn.CTCLoss()
+    #torch.autograd.set_detect_anomaly(True)
+    ctc_loss = nn.CTCLoss(reduction='mean', zero_infinity=True)
     model = Rec()
     #model.load_state_dict(torch.load('model/...'))
     #optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     #import apex
     #optimizer = apex.optimizers.FusedAdam(model.parameters(), lr=learning_rate)
-    val = torch.tensor(load_example('data/wavs/LJ037-0171.wav'))
+    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+    val = torch.tensor(load_example('../data/wavs/LJ037-0171.wav'))
     for epoch in range(epochs):
         if WAN:
             wandb.watch(model)
@@ -164,7 +164,7 @@ def train():
             mguess = model(val[:, None])
             pp = ''.join([CHARSET[c-1] for c in mguess[:, 0, :].argmax(dim=1) if c != 0])
             print('Validation: ',  pp)
-            torch.save(model.state_dict(), f'./models/speech_{epoch}.pt')
+            torch.save(model.state_dict(), f'./../models/speech_{epoch}.pt')
 
         losses = []
         t = tqdm(valloader, total=len(valdset)//batch_size)
@@ -175,22 +175,14 @@ def train():
             losses.append(loss)
         val_loss =  torch.mean(torch.tensor(losses)).item()
         print(f"val_loss: {val_loss:.2f}")
-
         if WAN:
-            wandb.log({"val_loss": val_loss, "lr" : scheluder.get_last_lr(){0}})
+            wandb.log({"val_loss": val_loss})
  
-        #t = tqdm(trainloader, total=len(dset)//batch_size)
-
-        random.shuffle(trains)
-        model.train()
-        batches = np.array(trains)[:len(data)//batch_size * batch_size].reshape(-1, batch_size)
-        j = 0
-        for samples in (t:=tqdm(batches)):
-            input, target, input_length, target_length = get_sample(samples)
-            
-            input = train_audio_transform(input.permute(1, 2, 0)).permute(2, 0 1)
-            #target = torch.rensor(target, dtype=torch.int32, device="cuda:0")
-            target = torch.rensor(target, dtype=torch.int32)
+        t = tqdm(trainloader, total=len(dset)//batch_size)
+        for data in t:
+            input, target, input_length, target_length = data
+            #input_length = torch.as_tensor(input_length)
+            #target_length = torch.as_tensor(target_length)
 
             #input = input.cuda()
             #input = input.to('cuda:0', non_blocking=True)
@@ -205,16 +197,14 @@ def train():
             '''
             #print(input_length.type())
             #print(f'guess : {guess} ; target : {target} ; input size {input_length} ; target size : {target_length}')
-            loss = ctc_loss(guess, target, input_length, target_length)
-            
+            eps = 1e-7
+            loss = ctc_loss(guess, target, input_length, target_length) + eps
+            loss=torch.mean(loss)
             loss.backward()
             optimizer.step()
-            scheduler.step()
-
-            t.set_description(f"epoch {epoch}  loss: %.2f" % loss.item())
-            if WAN and j%10==0:
+            t.set_description("loss: %.2f" % loss.item())
+            if WAN:
                 wandb.log({"loss": loss})
-            j += 1
 
 if __name__ == '__main__':
     train()
