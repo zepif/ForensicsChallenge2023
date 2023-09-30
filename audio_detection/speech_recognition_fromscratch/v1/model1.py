@@ -160,10 +160,10 @@ def train():
     torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
     val = torch.tensor(load_example('../data/wavs/LJ037-0171.wav'))
     mguess = model(val[:, None])
-    #dot = make_dot(mguess, params=dict(model.named_parameters()))
+    make_dot(mguess, params=dict(list(model.named_parameters())), show_attrs=True, show_saved=True).render("voice2text", format="jpg")
     #dot.render("model_architecture", format="png")
-    model_graph = draw_graph(model, input_size=(batch_size, 128), device='meta')
-    model_graph.visual_graph
+    #model_graph = draw_graph(model, input_size=(batch_size, 128), device='meta')
+    #model_graph.visual_graph
     for epoch in range(epochs):
         if WAN:
             wandb.watch(model)
