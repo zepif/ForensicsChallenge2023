@@ -7,6 +7,9 @@ import torch.optim as optim
 import torchaudio
 import numpy as np
 from torch.utils.data import Dataset
+from torchviz import make_dot
+from torchview import draw_graph
+import torchvision.models as models
 
 DATASET = "C:\\fun\ForensicsChallenge2023_team6\\audio_detection\speech_recognition_fromscratch\data"
 CHARSET = " abcdefghijklmnopqrstuvwxyz,."
@@ -156,6 +159,11 @@ def train():
     #optimizer = apex.optimizers.FusedAdam(model.parameters(), lr=learning_rate)
     torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
     val = torch.tensor(load_example('../data/wavs/LJ037-0171.wav'))
+    mguess = model(val[:, None])
+    #dot = make_dot(mguess, params=dict(model.named_parameters()))
+    #dot.render("model_architecture", format="png")
+    model_graph = draw_graph(model, input_size=(batch_size, 128), device='meta')
+    model_graph.visual_graph
     for epoch in range(epochs):
         if WAN:
             wandb.watch(model)
@@ -209,3 +217,4 @@ def train():
 if __name__ == '__main__':
     train()
 
+#During the programming competitions you need to solve some algorithmic problems in given amount of time.
