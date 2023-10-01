@@ -6,6 +6,7 @@ from torch import nn
 import torch.optim as optim
 import torchaudio
 import numpy as np
+from IPython.display import display
 from torch.utils.data import Dataset
 from torchviz import make_dot
 from torchview import draw_graph
@@ -159,8 +160,20 @@ def train():
     #optimizer = apex.optimizers.FusedAdam(model.parameters(), lr=learning_rate)
     torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
     val = torch.tensor(load_example('../data/wavs/LJ037-0171.wav'))
-    mguess = model(val[:, None])
-    make_dot(mguess, params=dict(list(model.named_parameters())), show_attrs=True, show_saved=True).render("voice2text", format="jpg")
+
+    #dummy_input = torch.randn(16, 16, 80)
+    #dot_model = make_dot(model(dummy_input), params=dict(model.named_parameters()))
+    #dot_model.render("model_architecture", format="png")
+
+    #encoder = model.encoder
+    #dummy_encoder_input = torch.randn(128, 80, 256)
+    #dot_encoder = make_dot(encoder(dummy_encoder_input), params=dict(encoder.named_parameters()))
+    #dot_encoder.render("encoder_architecture", format="png")
+
+    #decoder = model.decode
+    #dummy_decoder_input = torch.randn(128, 64, 256)
+    #dot_decoder = make_dot(decoder(dummy_decoder_input), params=dict(decoder.named_parameters()))
+    #чdot_decoder.render("decoder_architecture", format="png")
     #dot.render("model_architecture", format="png")
     #model_graph = draw_graph(model, input_size=(batch_size, 128), device='meta')
     #model_graph.visual_graph
@@ -216,5 +229,3 @@ def train():
 
 if __name__ == '__main__':
     train()
-
-#During the programming competitions you need to solve some algorithmic problems in given amount of time.
