@@ -1,5 +1,10 @@
 # ForensicsChallenge2023 Team6
 
+# Our presantation in [Vienna](https://mmf.univie.ac.at/kharkiv-vienna/vienna-2023/) 
+
+https://docs.google.com/presentation/d/1_GBwiq_9nEkB1opoOX9BCcrERXAkWUT0IQ4eg9GHejQ/edit#slide=id.g285b72f5a0a_0_606
+<!---
+
 # Challenge №1
 **Use computer vision to isolate each person in a video for 3D recreation or identifying
 suspects in crime scenes.**
@@ -90,4 +95,4 @@ https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/d9e7899b-e
 Result:
 ![image](https://github.com/zepif/ForensicsChallenge2023_team6/assets/95505468/38a5fc5d-494c-40af-81b3-3b1c6ac412a1)
 also program shows shots time in console
-
+--->
